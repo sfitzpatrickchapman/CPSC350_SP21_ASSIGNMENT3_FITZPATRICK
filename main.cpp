@@ -20,9 +20,8 @@ char getConfigType() { // TODO: MAKE THIS RETURN CONFIGURATION OR INSTANTIATE ON
 		cout << "Enter \"r\" for random or \"f\" for a flat file configuration: ";
 		cin >> configInput;
 	}
-
 	return configInput;
- }
+}
 
 
 char getBoundaryType() {
@@ -46,18 +45,20 @@ char getBoundaryType() {
 
 int getColumnsX() { //TODO: Type checking
 	int x;
+
+	/* Prompt for columns amt, input, and return */
 	cout << "Columns (enter integer): ";
 	cin >> x;
-	
 	return x;
 }
 
 
-int getRowsY() {
+int getRowsY() {//TODO: Validate x as an integer
 	int y;
+
+	/* Prompt for columns amt, input, and return */
 	cout << "Rows (enter integer): ";
 	cin >> y;
-	//TODO: Validate x as an integer
 	return y;
 }
 
@@ -71,51 +72,93 @@ int getDensity() { //TODO: Type checking
 
 	/* Convert density to an integer (round the float) for later use with % operator */
 	density *= 100; //Ex: 0.54 -> 54
-	int densityInt = round(density); //rounds & avoids truncation for precision
+	int roundedDensityInt = round(density); //rounds & avoids truncation for precision
 
-	return densityInt;
+	return roundedDensityInt;
 }
 
 
-string getFileName() { //TODO: Type checking
+string getInputFileName() { //TODO: Type checking
 	string fileName;
+
+	/* Prompt for fileName, input, and return */
 	cout << "Please enter your input file name: ";
 	cin >> fileName;
-
 	return fileName;
+}
+
+
+bool getPausePreference() {
+	char pausePreference;
+
+	/* Prompt for pause option between generations */
+	cout << "Do you want the program to pause between generations?" << endl;
+	cout << "Type \"y\" for yes and \"n\" for no: ";
+	cin >> pausePreference;
+
+	/* Handle improper input */
+	while ((pausePreference != 'y') && (pausePreference != 'n')) {
+		cout << "Error: Invalid boundary input! Please try again." << endl;
+		cout << "Type \"y\" for yes and \"n\" for no: ";
+		cin >> pausePreference;
+	}
+
+	/* Return true if yes and vise versa */
+	if (pausePreference == 'y')
+		return true;
+	return false;
+}
+
+
+bool getSavePreference() {
+	char savePreference;
+
+	/* Prompt for save to output file option */
+	cout << "Do you want the program to save the final environment after running?" << endl;
+	cout << "Type \"y\" for yes and \"n\" for no: ";
+	cin >> savePreference;
+
+	/* Handle improper input */
+	while ((savePreference != 'y') && (savePreference != 'n')) {
+		cout << "Error: Invalid boundary input! Please try again." << endl;
+		cout << "Type \"y\" for yes and \"n\" for no: ";
+		cin >> savePreference;
+	}
+
+	/* Return true if yes and vise versa */
+	if (savePreference == 'y')
+		return true;
+	return false;
 }
 
 
 int main(int argc, char** argv) {
 	cout << "\nWelcome to Game of Life!" << endl;
 
+	/* Get different program guidelines from user input */
 	char configType = getConfigType();
 	char boundaryType = getBoundaryType();
+	bool pausePreference = getPausePreference();
+	bool savePreference = getSavePreference();
 
 	if (configType == 'r') { //calling constructor for random environment
+
 		/* Prompt and input for dimensions and density */
 		cout << "Which dimensions and density would you like to use?" << endl;
 		int x = getColumnsX();
 		int y = getRowsY();
-		int density = getDensity();
+		int roundedDensityInt = getDensity();
 
-		Environment life(x, y, density, boundaryType);
-		life.printEnvironments(0);
+		/* Instantiate and simulate*/
+		Environment life(x, y, roundedDensityInt, boundaryType, pausePreference, savePreference);
+		life.simulate();
 	}
-	else { //calling ocnstructor for inputted environment configuration
-		string fileName = getFileName(); //get file name
+	else { //calling constructor for inputted environment configuration
+		string inputFileName = getInputFileName(); //get file name
 
-		Environment life(fileName, boundaryType);
-		life.printEnvironments(0);
-		cout << "Neighbor avg 0: " << life.getNeighborAvg(0) << endl;
-		//cout << "Neighbor avg 3: " << life.getNeighborAvg(3) << endl;
-		//cout << "Neighbor avg 6: " << life.getNeighborAvg(6) << endl;
-
-		//cout << "Neighbor avg 6: " << life.getNeighborAvg(6) << endl;
-		//cout << "Neighbor avg 12: " << life.getNeighborAvg(12) << endl;
-		//cout << "Neighbor avg 18: " << life.getNeighborAvg(18) << endl;
-		//cout << "Neighbor avg 24: " << life.getNeighborAvg(24) << endl;
-		//cout << "Neighbor avg 30: " << life.getNeighborAvg(30) << endl;
+		/* Instantiate and simulate*/
+		Environment life(inputFileName, boundaryType, pausePreference, savePreference);
+		life.simulate();
 	}
 
 	return 0;
