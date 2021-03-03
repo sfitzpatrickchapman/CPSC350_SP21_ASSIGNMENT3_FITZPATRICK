@@ -2,8 +2,12 @@
 This program simulates life within a matrix depending on many options selected by  
 the user. It provides multiple boundary modes, file inputting/saving, and other
 parameters specific to the modes. It functions using malloc for 1d arrays that
-represent 2d matrices. The program runs until it becomes empty, reaches stability,
-or just runs forever if the cells never achieve either.
+represent 2d matrices. Was malloc worth it? Idk. The program runs until it becomes
+empty, reaches stability, or just runs forever if the cells never achieve either.
+
+* Using 1 late day
+
+
 
 ## Identifying Information
 
@@ -41,8 +45,7 @@ or just runs forever if the cells never achieve either.
 * Random number probabilities: https://stackoverflow.com/questions/12885356/random-numbers-with-different-probabilities
 
 ## Known Errors
-
-* 
+* Random cell life generator seems off
 
 ## Build Insructions
 * g++ *.cpp

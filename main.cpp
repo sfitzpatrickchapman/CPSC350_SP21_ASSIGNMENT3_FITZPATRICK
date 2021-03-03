@@ -70,6 +70,13 @@ int getDensity() { //TODO: Type checking
 	cout << "Density (enter decimal greater than zero and less than or equal to one): ";
 	cin >> density;
 
+	/* Handle improper imput */
+	while ((density < 0) || (density > 1)) {
+		cout << "Error: Invalid input! Make sure the size is correct." << endl;
+		cout << "Try again: ";
+		cin >> density;
+	}
+
 	/* Convert density to an integer (round the float) for later use with % operator */
 	density *= 100; //Ex: 0.54 -> 54
 	int roundedDensityInt = round(density); //rounds & avoids truncation for precision

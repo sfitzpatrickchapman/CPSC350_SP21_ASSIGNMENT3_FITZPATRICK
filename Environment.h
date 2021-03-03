@@ -1,7 +1,12 @@
+#ifndef ENVIRONMENT_H
+#define ENVIRONMENT_H
+
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <fstream>
+#include <stdlib.h>
+#include <cstdlib>
 using namespace std;
 
 class Environment {
@@ -41,3 +46,5 @@ private:
 	const int z = 3; //number of dimensions (generations)
 	char* environments[3]; //must be the same as z
 };
+
+#endif

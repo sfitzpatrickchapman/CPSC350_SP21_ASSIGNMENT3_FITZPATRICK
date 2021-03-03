@@ -27,7 +27,8 @@ Environment::Environment(int x, int y, int density, char boundary, bool pausePre
 	/* Randomly fill the environment[0] with either '-' or 'X' */
 	bool cellLifeTrue;
 	for (int j = 0; j < (envSize); j++) {
-		cellLifeTrue = (rand() % 100) < density; //calculates density odds
+		int randomInt = rand() % 100;
+		cellLifeTrue = randomInt < density; //calculates density odds
 		if (cellLifeTrue)
 			environments[0][j] = 'X';
 		else
@@ -89,7 +90,7 @@ Environment::~Environment() {
 }
 
 
-/* Core Functions */
+/* Functions */
 void Environment::printEnvironments(int envGen) {
 	/* Loop through array and print as 2d matrix */
 	for (int i = 0; i < (columnsX * rowsY); i++) {
@@ -108,7 +109,7 @@ string Environment::getInputFileName() {
 	/* Prompt, input input file name, and return */
 	cout << "Please enter your output file name: ";
 	cin >> fileName;
-	cout << "Disclaimer: Your file will not save if the simulation is infinite!" << endl << endl;
+	cout << "Warning: Your file will not save if the simulation is infinite!" << endl << endl;
 	return fileName;
 }
 
@@ -510,7 +511,7 @@ void Environment::simulate() {
 			exit(0);
 		}
 		else if ((counter > 0) && (isEnvironmentStable())) {
-			cout << "The environment has stabalized!" << endl;
+			cout << "The environment has stabilized!" << endl;
 
 			if (savePref) //save file (if requested)
 				saveFile();
